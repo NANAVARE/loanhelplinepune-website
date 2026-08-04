@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: "NANAVARE/loanhelplinepune-website"
   branch: main
 
 media_folder: "images"
