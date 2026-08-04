@@ -3,50 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoanHelpline Pune - लोन माहिती आणि ऑफर्स</title>
+    <title>LoanHelpline Pune - तुमचा आर्थिक सोबती</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header style="background: #004080; color: white; padding: 20px; text-align: center;">
-        <h1>LoanHelpline Pune</h1>
-        <p>विश्वासू आणि झटपट कर्ज सेवा (Home, Personal & Machinery Loan)</p>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">LoanHelpline Pune</div>
+            <nav>
+                <ul>
+                    <li><a href="#hero">मुख्यपृष्ठ</a></li>
+                    <li><a href="#services">सेवा</a></li>
+                    <li><a href="#inquiry"> चौकशी</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <section style="background: #fff3cd; padding: 20px; margin: 20px; border-radius: 8px; text-align: center;">
-        <h2 style="color: #856404;">🔥 आजची विशेष ऑफर (Daily Offer)</h2>
-        <div id="offer-content">
-            <p id="offer-text" style="font-size: 18px; color: #333;">माहिती लोड होत आहे...</p>
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>तुमच्या स्वप्नांना द्या आर्थिक बळ</h1>
+                <p>गृहकर्ज, वैयक्तिक कर्ज आणि मशिनरी कर्जासाठी सर्वोत्तम पर्याय.</p>
+                <a href="#inquiry" class="btn btn-primary">आत्ताच चौकशी करा</a>
+            </div>
         </div>
     </section>
 
-    <section style="padding: 20px; text-align: center;">
-        <h2>आमच्या प्रमुख सेवा</h2>
-        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
-            <div style="background: #f8f9fa; padding: 20px; width: 250px; border-radius: 8px; border: 1px solid #ddd;">
-                <h3>🏠 Home Loan</h3>
-                <p>स्वप्नातील घर खरेदीसाठी कमी व्याजदरात कर्ज.</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 20px; width: 250px; border-radius: 8px; border: 1px solid #ddd;">
-                <h3>💰 Personal Loan</h3>
-                <p>कोणत्याही तातडीच्या गरजांसाठी झटपट पर्सनल लोन.</p>
-            </div>
-            <div style="background: #f8f9fa; padding: 20px; width: 250px; border-radius: 8px; border: 1px solid #ddd;">
-                <h3>⚙️ Machinery Loan</h3>
-                <p>व्यवसाय वाढवण्यासाठी मशिनरीवर सुलभ वित्तपुरवठा.</p>
+    <section id="offer" class="offer-section">
+        <div class="container">
+            <h2 class="section-title">🔥 आजची विशेष ऑफर (Daily Offer)</h2>
+            <div id="offer-content" class="offer-card">
+                <p id="offer-text">माहिती लोड होत आहे...</p>
             </div>
         </div>
     </section>
+
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="section-title">आमच्या प्रमुख सेवा</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="icon-home"></i>
+                    <h3>गृहकर्ज</h3>
+                    <p>तुमच्या स्वप्नातील घरासाठी कमी व्याजदरात गृहकर्ज मिळवा.</p>
+                </div>
+                <div class="service-card">
+                    <i class="icon-personal"></i>
+                    <h3>वैयक्तिक कर्ज</h3>
+                    <p>कोणत्याही तातडीच्या गरजांसाठी झटपट वैयक्तिक कर्ज.</p>
+                </div>
+                <div class="service-card">
+                    <i class="icon-machinery"></i>
+                    <h3>मशिनरी कर्ज</h3>
+                    <p>व्यवसाय वाढवण्यासाठी मशिनरीवर सुलभ वित्तपुरवठा.</p>
+                </div>
+                <div class="service-card">
+                    <i class="icon-business"></i>
+                    <h3>व्यवसाय कर्ज</h3>
+                    <p>तुमच्या व्यवसायाच्या वाढीसाठी अनुकूल व्यवसाय कर्ज.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="inquiry" class="inquiry-section">
+        <div class="container">
+            <h2 class="section-title">आत्ताच चौकशी करा</h2>
+            <form id="inquiry-form" class="inquiry-form">
+                <div class="form-group">
+                    <label for="name">नाव:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">ईमेल:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">फोन नंबर:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="loan-type">कर्जाचा प्रकार:</label>
+                    <select id="loan-type" name="loan-type">
+                        <option value="home">गृहकर्ज</option>
+                        <option value="personal">वैयक्तिक कर्ज</option>
+                        <option value="machinery">मशिनरी कर्ज</option>
+                        <option value="business">व्यवसाय कर्ज</option>
+                        <option value="other">इतर</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">संदेश:</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">चौकशी पाठवा</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 LoanHelpline Pune. सर्व हक्क राखीव.</p>
+        </div>
+    </footer>
 
     <script src="https://identity.netlify.app/v1/netlify-identity-widget.js"></script>
     <script>
-      fetch('content/offer.json')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('offer-text').innerHTML = `<strong>${data.title}</strong><br>${data.description}`;
-        })
-        .catch(error => {
-            console.log('Offer load error:', error);
-            document.getElementById('offer-text').innerText = "सध्या कोणतीही नवीन ऑफर उपलब्ध नाही.";
+        fetch("content/offer.json")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("offer-text").innerHTML = `<strong>${data.title}</strong><br>${data.description}`;
+            })
+            .catch(error => {
+                console.error("Offer load error:", error);
+                document.getElementById("offer-text").innerText = "सध्या कोणतीही नवीन ऑफर उपलब्ध नाही.";
+            });
+
+        document.getElementById("inquiry-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("तुमची चौकशी यशस्वीरित्या पाठवली गेली आहे! आम्ही लवकरच तुमच्याशी संपर्क साधू.");
+            this.reset();
         });
     </script>
 </body>
