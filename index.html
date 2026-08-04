@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoanHelpline Pune - लोन माहिती आणि ऑफर्स</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header style="background: #004080; color: white; padding: 20px; text-align: center;">
+        <h1>LoanHelpline Pune</h1>
+        <p>विश्वासू आणि झटपट कर्ज सेवा (Home, Personal & Machinery Loan)</p>
+    </header>
+
+    <section style="background: #fff3cd; padding: 20px; margin: 20px; border-radius: 8px; text-align: center;">
+        <h2 style="color: #856404;">🔥 आजची विशेष ऑफर (Daily Offer)</h2>
+        <div id="offer-content">
+            <p id="offer-text" style="font-size: 18px; color: #333;">माहिती लोड होत आहे...</p>
+        </div>
+    </section>
+
+    <section style="padding: 20px; text-align: center;">
+        <h2>आमच्या प्रमुख सेवा</h2>
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+            <div style="background: #f8f9fa; padding: 20px; width: 250px; border-radius: 8px; border: 1px solid #ddd;">
+                <h3>🏠 Home Loan</h3>
+                <p>स्वप्नातील घर खरेदीसाठी कमी व्याजदरात कर्ज.</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; width: 250px; border-radius: 8px; border: 1px solid #ddd;">
+                <h3>💰 Personal Loan</h3>
+                <p>कोणत्याही तातडीच्या गरजांसाठी झटपट पर्सनल लोन.</p>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; width: 250px; border-radius: 8px; border: 1px solid #ddd;">
+                <h3>⚙️ Machinery Loan</h3>
+                <p>व्यवसाय वाढवण्यासाठी मशिनरीवर सुलभ वित्तपुरवठा.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://identity.netlify.app/v1/netlify-identity-widget.js"></script>
+    <script>
+      fetch('content/offer.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('offer-text').innerHTML = `<strong>${data.title}</strong><br>${data.description}`;
+        })
+        .catch(error => {
+            console.log('Offer load error:', error);
+            document.getElementById('offer-text').innerText = "सध्या कोणतीही नवीन ऑफर उपलब्ध नाही.";
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "offers"
+    label: "Daily Offers"
+    files:
+      - file: "content/offer.json"
+        label: "आजची ऑफर (Today's Offer)"
+        name: "offer"
+        fields:
+          - {label: "ऑफरचे शीर्षक (Title)", name: "title", widget: "string"}
+          - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
