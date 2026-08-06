@@ -1,3 +1,4 @@
+// भाषांचे डेटा (Translations)
 const translations = {
     en: {
         // Header
@@ -83,42 +84,51 @@ const translations = {
     }
 };
 
-function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-key]').forEach(element => {
-        const key = element.getAttribute('data-key');
-        if (translations[lang][key]) {
+// भाषा बदलण्याचे फंक्शन (Language Switcher)
+function changeLanguage(lang) {
+    localStorage.setItem('selectedLang', lang);
+    document.querySelectorAll('[data-lang-key]').forEach(element => {
+        const key = element.getAttribute('data-lang-key');
+        if (translations[lang] && translations[lang][key]) {
             element.innerHTML = translations[lang][key];
         }
     });
 }
 
-// Event listeners for language buttons
+// rates.json मधून लोनचे व्याजदर फेच करून दाखवणारे फंक्शन
+async function loadLoanRates() {
+    try {
+        const response = await fetch('content/rates.json');
+        const data = await response.json();
+        
+        const container = document.getElementById('loan-rates-container');
+        if (!container) return;
+
+        let html = `<p><b>शेवटचे अपडेट:</b> ${data.last_updated}</p>`;
+        
+        // गृहकर्ज (Home Loan)
+        html += `<h3>गृहकर्ज (Home Loan)</h3><ul>`;
+        data.loans.home_loan.forEach(item => {
+            html += `<li><b>${item.bank}</b>: व्याजदर ${item.interest_rate} (प्रोसेसिंग फी: ${item.processing_fee})</li>`;
+        });
+        html += `</ul>`;
+
+        // वैयक्तिक कर्ज (Personal Loan)
+        html += `<h3>वैयक्तिक कर्ज (Personal Loan)</h3><ul>`;
+        data.loans.personal_loan.forEach(item => {
+            html += `<li><b>${item.bank}</b>: व्याजदर ${item.interest_rate} (प्रोसेसिंग फी: ${item.processing_fee})</li>`;
+        });
+        html += `</ul>`;
+
+        container.innerHTML = html;
+    } catch (error) {
+        console.error('लोन रेट्स लोड करताना एरर आला:', error);
+    }
+}
+
+// पेज लोड झाल्यावर रन होईल
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.lang-button').forEach(button => {
-        button.addEventListener('click', () => {
-            setLanguage(button.getAttribute('data-lang'));
-        });
-    });
-
-    // Set initial language based on the HTML lang attribute or default to Marathi
-    const initialLang = document.documentElement.lang || 'mr';
-    setLanguage(initialLang);
-
-    // Existing offer fetch logic
-    fetch("content/offer.json")
-        .then(response => response.json())
-        .then(data => {
-            const offerTextElement = document.getElementById("offer-text");
-            if (offerTextElement) {
-                offerTextElement.innerHTML = `<strong>${data.title}</strong><br>${data.description}`;
-            }
-        })
-        .catch(error => {
-            console.error("Offer load error:", error);
-            const offerTextElement = document.getElementById("offer-text");
-            if (offerTextElement) {
-                offerTextElement.innerHTML = translations[document.documentElement.lang]['offer-no-offer'];
-            }
-        });
+    const savedLang = localStorage.getItem('selectedLang') || 'mr';
+    changeLanguage(savedLang);
+    loadLoanRates();
 });
