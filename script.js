@@ -32,19 +32,37 @@ function changeLanguage(lang) {
     }
 }
 
-// लोन रेट्स लोड करणारे फंक्शन
+// लोन रेट्स आणि ऑफर्स लोड करून वेबसाईटवर दाखवणारे फंक्शन
 async function loadLoanRates() {
     try {
-        const response = await fetch('content/rates.json');
-        if (!response.ok) throw new Error('Failed to load rates');
-        const data = await response.json();
-        console.log("Loan rates loaded successfully:", data);
+        // १. व्याजदर लोड करणे
+        const ratesResponse = await fetch('content/rates.json');
+        if (ratesResponse.ok) {
+            const ratesData = await ratesResponse.json();
+            const ratesContainer = document.getElementById('rates-container');
+            if (ratesContainer) {
+                ratesContainer.innerHTML = `<pre>${JSON.stringify(ratesData, null, 2)}</pre>`;
+            }
+            console.log("Loan rates loaded successfully:", ratesData);
+        }
+
+        // २. आजची ऑफर लोड करणे
+        const offerResponse = await fetch('content/offer.json');
+        if (offerResponse.ok) {
+            const offerData = await offerResponse.json();
+            const offerContainer = document.getElementById('offer-container');
+            if (offerContainer) {
+                offerContainer.innerHTML = `<p>${offerData.message || JSON.stringify(offerData)}</p>`;
+            }
+            console.log("Offer loaded successfully:", offerData);
+        }
+
     } catch (error) {
-        console.error("Error loading loan rates:", error);
+        console.error("Error loading loan rates or offers:", error);
     }
 }
 
-// पेज लोड झाल्यावर डिफॉल्ट भाषा सेट करणे
+// पेज लोड झाल्यावर डिफॉल्ट भाषा सेट करणे आणि डेटा फेच करणे
 window.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('selectedLang') || 'mr';
     changeLanguage(savedLang);
