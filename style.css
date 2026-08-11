@@ -399,3 +399,50 @@ body {
         margin-right: 0;
     }
 }
+
+/* ---------- Rate cards (added — supports the fixed script.js rendering) ---------- */
+.loan-rates-section {
+    padding: 60px 0;
+    background-color: #fff;
+}
+.loan-rates-grid-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 10px;
+}
+.rate-card {
+    background: #f7f9fc;
+    border: 1px solid #e1e6ee;
+    border-radius: 10px;
+    padding: 24px 20px;
+    text-align: center;
+}
+.rate-card h3 {
+    margin: 0 0 10px;
+    font-size: 17px;
+    color: #004080;
+}
+.rate-card .rate-figure {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ff9900;
+    margin: 0 0 6px;
+}
+.rate-card .rate-sub {
+    font-size: 13px;
+    color: #667;
+    margin: 0;
+}
+.rates-verified, .rates-note {
+    text-align: center;
+    font-size: 13px;
+    color: #778;
+    margin-top: 18px;
+}
+.rates-note {
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
