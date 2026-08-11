@@ -1,0 +1,44 @@
+name: Check loan-rate freshness (reminder only)
+
+# SAFE automation: this workflow NEVER edits content/rates.json itself.
+# It only checks how old the "last_verified" date is and, if it's stale,
+# opens a GitHub Issue reminding you to log into /admin and review the
+# rates. All actual rate changes still require a human to log in and
+# save the form — that's intentional, for compliance reasons.
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"   # every Monday, 04:00 UTC (~9:30 AM IST)
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run freshness check
+        run: python3 automation/check_rates_freshness.py
+
+      - name: Open reminder issue if stale
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const flagPath = 'automation/_needs_review.flag';
+            if (fs.existsSync(flagPath)) {
+              const reason = fs.readFileSync(flagPath, 'utf8');
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🔔 Loan rates need review',
+                body: `The loan rates in \`content/rates.json\` look stale (${reason}).\n\nPlease log into **/admin** and review/update the rates via the "Loan Rates" section, then save.\n\nThis issue was opened automatically — no rate values were changed.`,
+                labels: ['rates-review'],
+              });
+            } else {
+              console.log('Rates are fresh — no issue needed.');
+            }
