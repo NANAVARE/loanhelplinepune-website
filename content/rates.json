@@ -1,34 +1,23 @@
 {
-    "last_updated": "2026-08-11",
+    "last_verified": "2026-08-11",
+    "verified_by": "Admin",
+    "note": "हे अंदाजे दर आहेत (विविध बँका/NBFC च्या सध्याच्या श्रेणीनुसार). अंतिम व्याजदर, प्रोसेसिंग फी आणि मंजुरी ही संबंधित कर्ज देणाऱ्या संस्थेच्या स्वतःच्या तपासणीनंतर ठरते. LoanHelpline Pune ही कर्ज सल्लागार सेवा आहे, स्वतः कर्ज देणारी संस्था नाही.",
     "loans": {
-        "home_loan": [
-            {
-                "bank": "SBI",
-                "interest_rate": "8.50%",
-                "processing_fee": "0.35%"
-            },
-            {
-                "bank": "HDFC",
-                "interest_rate": "8.70%",
-                "processing_fee": "0.50%"
-            },
-            {
-                "bank": "ICICI",
-                "interest_rate": "8.75%",
-                "processing_fee": "0.50%"
-            }
-        ],
-        "personal_loan": [
-            {
-                "bank": "SBI",
-                "interest_rate": "11.00%",
-                "processing_fee": "1.00%"
-            },
-            {
-                "bank": "HDFC",
-                "interest_rate": "10.50%",
-                "processing_fee": "0.99%"
-            }
-        ]
+        "home_loan": {
+            "range": "7.25% – 9.05% p.a.",
+            "processing_fee_range": "0.35% – 0.50%"
+        },
+        "personal_loan": {
+            "range": "10.5% – 24% p.a.",
+            "processing_fee_range": "0.99% – 2%"
+        },
+        "business_loan": {
+            "range": "11% – 22% p.a.",
+            "processing_fee_range": "1% – 2.5%"
+        },
+        "loan_against_property": {
+            "range": "9% – 14% p.a.",
+            "processing_fee_range": "0.5% – 1.5%"
+        }
     }
 }
