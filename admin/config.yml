@@ -2,6 +2,8 @@ backend:
   name: github
   repo: "NANAVARE/loanhelplinepune-website"
   branch: main
+  base_url: https://fluffy-monstera-d3a4ec.netlify.app
+  auth_endpoint: auth
 
 media_folder: "images"
 public_folder: "/images"
@@ -16,3 +18,51 @@ collections:
         fields:
           - {label: "ऑफरचे शीर्षक (Title)", name: "title", widget: "string"}
           - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
+
+  - name: "rates"
+    label: "Loan Rates (कर्ज दर)"
+    files:
+      - file: "content/rates.json"
+        label: "कर्ज दर संपादित करा (Edit Loan Rates)"
+        name: "rates"
+        fields:
+          - label: "शेवटचं पडताळलेली तारीख (Last verified date)"
+            name: "last_verified"
+            widget: "date"
+            format: "YYYY-MM-DD"
+          - label: "पडताळणी करणारा (Verified by)"
+            name: "verified_by"
+            widget: "string"
+            default: "Admin"
+          - label: "टीप (Note shown to visitors)"
+            name: "note"
+            widget: "text"
+            default: "हे अंदाजे दर आहेत. अंतिम व्याजदर कर्ज देणाऱ्या संस्थेकडून ठरवला जातो."
+          - label: "कर्ज प्रकार (Loan Types)"
+            name: "loans"
+            widget: "object"
+            fields:
+              - label: "गृहकर्ज (Home Loan)"
+                name: "home_loan"
+                widget: "object"
+                fields:
+                  - {label: "व्याजदर रेंज (Rate range)", name: "range", widget: "string", hint: "उदा. 7.25% – 9.05% p.a."}
+                  - {label: "प्रोसेसिंग फी रेंज", name: "processing_fee_range", widget: "string"}
+              - label: "वैयक्तिक कर्ज (Personal Loan)"
+                name: "personal_loan"
+                widget: "object"
+                fields:
+                  - {label: "व्याजदर रेंज (Rate range)", name: "range", widget: "string"}
+                  - {label: "प्रोसेसिंग फी रेंज", name: "processing_fee_range", widget: "string"}
+              - label: "व्यवसाय कर्ज (Business Loan)"
+                name: "business_loan"
+                widget: "object"
+                fields:
+                  - {label: "व्याजदर रेंज (Rate range)", name: "range", widget: "string"}
+                  - {label: "प्रोसेसिंग फी रेंज", name: "processing_fee_range", widget: "string"}
+              - label: "मालमत्तेवर कर्ज (Loan Against Property)"
+                name: "loan_against_property"
+                widget: "object"
+                fields:
+                  - {label: "व्याजदर रेंज (Rate range)", name: "range", widget: "string"}
+                  - {label: "प्रोसेसिंग फी रेंज", name: "processing_fee_range", widget: "string"}
