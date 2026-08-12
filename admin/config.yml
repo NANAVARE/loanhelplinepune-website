@@ -2,8 +2,8 @@ backend:
   name: github
   repo: "NANAVARE/loanhelplinepune-website"
   branch: main
-  base_url: https://fluffy-monstera-d3a4ec.netlify.app
-  auth_endpoint: auth
+  base_url: https://loanhelplinepune-oauth-proxy.nanavare-vinayak31.workers.dev
+  auth_endpoint: api/auth
 
 media_folder: "images"
 public_folder: "/images"
