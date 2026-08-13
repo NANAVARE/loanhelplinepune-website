@@ -1,12 +1,186 @@
 <!doctype html>
-<html>
+<html lang="mr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LoanHelpline Pune — Admin</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LoanHelpline Pune — Home, Personal, Business & Property Loan Advisory</title>
+<meta name="description" content="LoanHelpline Pune helps you find the right Home, Personal, Business, Machinery or Property loan in Pune. Trusted advisory, quick response on WhatsApp." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="nc-root"></div>
-  <script src="https://unpkg.com/decap-cms@3.15.1/dist/decap-cms.js"></script>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#hero" class="brand">
+      <span class="brand-mark">LH</span>
+      <span class="brand-text">LoanHelpline<em>Pune</em></span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#hero" data-key="home-nav">मुख्यपृष्ठ</a>
+      <a href="#services" data-key="services-nav">सेवा</a>
+      <a href="blog/index.html">ब्लॉग</a>
+      <a href="https://wa.me/919604403772?text=नमस्कार,%20मला%20लोनबद्दल%20माहिती%20हवी%20आहे" target="_blank" class="whatsapp-nav-btn" data-key="inquiry-nav"><i class="fab fa-whatsapp"></i> चौकशी</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-toggle">
+        <button class="lang-button active" data-lang="en" data-key="english-button">English</button>
+        <button class="lang-button" data-lang="mr" data-key="marathi-button">मराठी</button>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="hero">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><i class="fa-solid fa-location-dot"></i> Pune, Maharashtra — Loan Advisory</p>
+        <h1 data-key="hero-heading">तुमच्या स्वप्नांना द्या आर्थिक बळ</h1>
+        <p class="hero-sub" data-key="hero-subheading">गृहकर्ज, वैयक्तिक कर्ज आणि मशिनरी कर्जासाठी सर्वोत्तम पर्याय.</p>
+        <div class="hero-actions">
+          <a href="https://wa.me/919604403772?text=नमस्कार,%20मला%20लोनबद्दल%20माहिती%20हवी%20आहे" target="_blank" class="btn btn-whatsapp" data-key="hero-whatsapp-button"><i class="fab fa-whatsapp"></i> WhatsApp वर चॅट करा</a>
+          <a href="#services" class="btn btn-outline">सेवा बघा <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-top">
+          <span class="hero-card-badge"><i class="fa-solid fa-shield-halved"></i> Verified Advisory</span>
+        </div>
+        <ul class="hero-card-stats">
+          <li><span class="n">5</span><span class="l">कर्ज प्रकार</span></li>
+          <li><span class="n">0%</span><span class="l">लपलेली फी</span></li>
+          <li><span class="n">&lt;5<small>मि</small></span><span class="l">प्रतिसाद वेळ</span></li>
+        </ul>
+        <p class="hero-card-note">आम्ही कर्ज सल्लागार सेवा आहोत — विश्वासार्ह भागीदार बँका/NBFC सोबत तुमची जुळणी करतो.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ledger-strip">
+    <div class="wrap ledger-strip-inner">
+      <div class="ledger-item"><span class="ledger-n">500+</span><span class="ledger-l">समाधानी ग्राहक</span></div>
+      <div class="ledger-item"><span class="ledger-n">5</span><span class="ledger-l">कर्ज श्रेणी</span></div>
+      <div class="ledger-item"><span class="ledger-n">24×7</span><span class="ledger-l">WhatsApp सपोर्ट</span></div>
+      <div class="ledger-item"><span class="ledger-n">Pune</span><span class="ledger-l">स्थानिक टीम</span></div>
+    </div>
+  </section>
+
+  <section class="offer-section">
+    <div class="wrap">
+      <div class="section-head center">
+        <h2><i class="fa-solid fa-fire" style="color:var(--gold)"></i> <span data-key="offer-title">आजची विशेष ऑफर (Daily Offer)</span></h2>
+      </div>
+      <div class="offer-card" id="offer-content">
+        <div id="offer-text">माहिती लोड होत आहे...</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rates-section">
+    <div class="wrap">
+      <div class="section-head center">
+        <h2 data-key="loan-rates-title">आजचे कर्ज दर</h2>
+      </div>
+      <div id="loan-rates-content" class="loan-rates-content">
+        <p data-key="loan-rates-loading">कर्जाचे दर लोड होत आहेत...</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="services-section">
+    <div class="wrap">
+      <div class="section-head center">
+        <h2 data-key="services-title">आमच्या प्रमुख सेवा</h2>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-house"></i></div>
+          <h3 data-key="home-loan-title">गृहकर्ज</h3>
+          <p data-key="home-loan-description">तुमच्या स्वप्नातील घरासाठी कमी व्याजदरात गृहकर्ज मिळवा.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-user"></i></div>
+          <h3 data-key="personal-loan-title">वैयक्तिक कर्ज</h3>
+          <p data-key="personal-loan-description">कोणत्याही तातडीच्या गरजांसाठी झटपट वैयक्तिक कर्ज.</p>
+          <a href="https://wa.me/919604403772?text=नमस्कार,%20मला%20लोनबद्दल%20माहिती%20हवी%20आहे" target="_blank" class="service-cta" data-key="whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp वर संपर्क करा</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-wrench"></i></div>
+          <h3 data-key="machinery-loan-title">मशिनरी कर्ज</h3>
+          <p data-key="machinery-loan-description">व्यवसाय वाढवण्यासाठी मशिनरीवर सुलभ वित्तपुरवठा.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <h3 data-key="business-loan-title">व्यवसाय कर्ज</h3>
+          <p data-key="business-loan-description">तुमच्या व्यवसायाच्या वाढीसाठी अनुकूल व्यवसाय कर्ज.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fa-solid fa-building"></i></div>
+          <h3 data-key="property-loan-title">मालमत्तेवर कर्ज</h3>
+          <p data-key="property-loan-description">तुमच्या मालमत्तेवर कमी व्याजदरात कर्ज मिळवा.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap cta-band-inner">
+      <div>
+        <h2>आजच चौकशी करा, उद्याच पुढचं पाऊल टाका</h2>
+        <p>पात्रता तपासा, दस्तऐवजांची यादी मिळवा — सर्व WhatsApp वर.</p>
+      </div>
+      <a href="https://wa.me/919604403772?text=नमस्कार,%20मला%20लोनबद्दल%20माहिती%20हवी%20आहे" target="_blank" class="btn btn-whatsapp-inverse"><i class="fab fa-whatsapp"></i> लगेच चॅट करा</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <span class="brand-text light"><span class="brand-mark">LH</span> LoanHelpline<em>Pune</em></span>
+      <p>पुण्यातील विश्वासार्ह कर्ज सल्लागार सेवा. आम्ही सावकार नाही — RBI-नोंदणीकृत बँका/NBFC सोबत तुमची जुळणी करतो.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a href="about.html" data-key="about-us">आमच्याबद्दल</a>
+      <a href="contact.html" data-key="contact-us">संपर्क</a>
+      <a href="blog/index.html">ब्लॉग</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="privacy.html" data-key="privacy-policy">गोपनीयता धोरण</a>
+      <a href="terms.html" data-key="terms-conditions">अटी व शर्ती</a>
+    </div>
+    <div class="footer-col">
+      <h4>संपर्क</h4>
+      <a href="https://wa.me/919604403772" target="_blank"><i class="fab fa-whatsapp"></i> +91 96044 03772</a>
+      <span class="footer-note">Mon–Sat, 10 AM – 7 PM</span>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span data-key="footer-copy">© 2026 LoanHelpline Pune. सर्व हक्क राखीव.</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    document.getElementById('mainNav').classList.toggle('open');
+  });
+</script>
 </body>
 </html>
