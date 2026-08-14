@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 """
-automation/generate_blog_post.py
+automation/generate_blog_post.py (Gemini version)
 
-Real automation: writes a new SEO blog post using the Claude API and adds
-it to blog/posts/, then rebuilds blog/index.html. Runs on a schedule via
-.github/workflows/auto-blog.yml — genuinely safe to run unattended because
-it only ever produces educational content (never rate/approval claims).
+Real automation: writes a new SEO blog post using the Google Gemini API
+(free, non-expiring tier) and adds it to blog/posts/, then rebuilds
+blog/index.html. Runs on a schedule via .github/workflows/auto-blog.yml.
 
-Requires the ANTHROPIC_API_KEY GitHub Actions secret to be set for live
-output; runs in a clearly-labeled demo mode without it.
+Requires the GEMINI_API_KEY GitHub Actions secret.
 """
 
 from __future__ import annotations
@@ -66,25 +64,27 @@ def save_state(index: int) -> None:
     STATE_FILE.write_text(json.dumps({"last_index": index, "updated_at": str(datetime.datetime.now(datetime.timezone.utc))}))
 
 
-def call_claude(topic: str) -> dict:
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+def call_gemini(topic: str) -> dict:
+    api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         slug = re.sub(r"[^a-z0-9]+", "-", topic.lower()).strip("-")
         return {
             "title": topic,
             "meta_description": f"{topic} — a guide from LoanHelpline Pune.",
             "slug": slug,
-            "body_html": f"<p>[DEMO MODE — set ANTHROPIC_API_KEY secret for a real article]</p><p>{topic}</p>",
+            "body_html": f"<p>[DEMO MODE — set GEMINI_API_KEY secret for a real article]</p><p>{topic}</p>",
         }
-    import anthropic
-    client = anthropic.Anthropic(api_key=api_key)
-    response = client.messages.create(
-        model="claude-sonnet-4-6", max_tokens=2000,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": f"Topic: {topic}"}],
+
+    import google.generativeai as genai
+
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel(
+        "gemini-2.5-flash",
+        system_instruction=SYSTEM_PROMPT,
+        generation_config={"response_mime_type": "application/json"},
     )
-    text = "".join(b.text for b in response.content if b.type == "text")
-    text = text.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    response = model.generate_content(f"Topic: {topic}")
+    text = response.text.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     return json.loads(text)
 
 
@@ -156,7 +156,7 @@ def main():
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
     topic, index = get_next_topic()
     print(f"[generate_blog_post] Topic: {topic}")
-    article = call_claude(topic)
+    article = call_gemini(topic)
     path = write_post(article)
     print(f"[generate_blog_post] Wrote: {path}")
     rebuild_blog_index()
