@@ -1,28 +1,14 @@
 #!/usr/bin/env python3
 """
-automation/daily_agent.py
+automation/daily_agent.py (Gemini version)
 
-The "one master prompt, ongoing autonomous work" agent — implemented safely.
+Same "one master prompt, ongoing autonomous work" agent as before, now
+powered by Google Gemini (which has a genuine, non-expiring free tier)
+instead of the Anthropic API.
 
-What it does, every time it runs (see .github/workflows/daily-agent.yml):
-  1. Reads the current homepage and a few key pages as context.
-  2. Sends a MASTER_SYSTEM_PROMPT (written once, below) + that context to Claude.
-  3. Claude decides, on its own, whether there's ONE small, safe improvement
-     worth making today (clearer wording, better SEO meta text, a missing
-     but harmless detail, etc.) and returns the exact new file content.
-  4. The script writes that file locally. The GitHub Actions workflow then
-     opens a Pull Request with the change — it is NEVER pushed directly to
-     the live site. A human (you) reviews and merges with one click.
-
-Hard boundaries (enforced in the prompt AND by which files the agent is
-even allowed to touch):
-  - The agent NEVER edits content/rates.json or content/offer.json — those
-    are compliance-sensitive and stay under direct human control via the
-    /admin panel (Decap CMS) only.
-  - The agent NEVER invents specific interest rates, approval times, or
-    guarantees.
-  - The agent may propose at most ONE change per run, to keep every PR
-    small and easy to review in seconds.
+Requires the GEMINI_API_KEY GitHub Actions secret. Get a free key at
+https://aistudio.google.com/apikey — no credit card needed, and the free
+tier does not expire.
 """
 
 from __future__ import annotations
@@ -84,15 +70,20 @@ def read_context() -> dict:
     return context
 
 
-def call_claude(context: dict) -> dict:
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+def call_gemini(context: dict) -> dict:
+    api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        print("[daily_agent] No ANTHROPIC_API_KEY set — skipping (demo mode has nothing safe to propose).")
+        print("[daily_agent] No GEMINI_API_KEY set — skipping (nothing safe to propose).")
         return {"has_suggestion": False, "target_file": None, "reasoning": "No API key configured.", "new_file_content": None}
 
-    import anthropic
+    import google.generativeai as genai
 
-    client = anthropic.Anthropic(api_key=api_key)
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel(
+        "gemini-2.5-flash",
+        system_instruction=MASTER_SYSTEM_PROMPT,
+        generation_config={"response_mime_type": "application/json"},
+    )
 
     user_message = (
         "Here is the current content of the allowed files:\n\n"
@@ -100,15 +91,8 @@ def call_claude(context: dict) -> dict:
         + "\n\nDecide if there's one small, safe improvement worth making today."
     )
 
-    response = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=8000,
-        system=MASTER_SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_message}],
-    )
-
-    text = "".join(b.text for b in response.content if b.type == "text")
-    text = text.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    response = model.generate_content(user_message)
+    text = response.text.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     return json.loads(text)
 
 
@@ -143,7 +127,7 @@ def apply_suggestion(suggestion: dict) -> bool:
 
 def main():
     context = read_context()
-    suggestion = call_claude(context)
+    suggestion = call_gemini(context)
     changed = apply_suggestion(suggestion)
     exit(0 if changed else 1)
 
