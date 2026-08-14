@@ -19,12 +19,12 @@ jobs:
         with:
           python-version: "3.11"
 
-      - run: pip install anthropic
+      - run: pip install google-generativeai
 
       - name: Run daily agent
         id: agent
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python automation/daily_agent.py && echo "has_change=true" >> "$GITHUB_OUTPUT" || echo "has_change=false" >> "$GITHUB_OUTPUT"
         continue-on-error: true
