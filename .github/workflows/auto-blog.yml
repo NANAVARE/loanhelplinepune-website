@@ -1,13 +1,8 @@
 name: Auto-publish blog post
 
-# Real automation: runs weekly, calls Claude to write a new SEO article,
-# and pushes it to the site. Safe to run unattended because the content
-# rules (in automation/generate_blog_post.py) forbid any rate/approval
-# claims — only educational articles are ever produced.
-
 on:
   schedule:
-    - cron: "0 3 * * 1"   # every Monday, 03:00 UTC (~8:30 AM IST)
+    - cron: "0 3 * * 1"
   workflow_dispatch: {}
 
 permissions:
@@ -23,11 +18,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - run: pip install anthropic
+      - run: pip install google-generativeai
 
       - name: Generate blog post
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python automation/generate_blog_post.py
 
       - name: Commit and push new post
