@@ -1,0 +1,62 @@
+name: Daily site-improvement agent
+
+on:
+  schedule:
+    - cron: "0 5 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  suggest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install anthropic
+
+      - name: Run daily agent
+        id: agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python automation/daily_agent.py && echo "has_change=true" >> "$GITHUB_OUTPUT" || echo "has_change=false" >> "$GITHUB_OUTPUT"
+        continue-on-error: true
+
+      - name: Read suggestion summary
+        id: summary
+        if: steps.agent.outputs.has_change == 'true'
+        run: |
+          FILE=$(python -c "import json; print(json.load(open('automation/_last_suggestion.json'))['file'])")
+          REASON=$(python -c "import json; print(json.load(open('automation/_last_suggestion.json'))['reasoning'])")
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+          echo "reason=$REASON" >> "$GITHUB_OUTPUT"
+
+      - name: Open Pull Request
+        if: steps.agent.outputs.has_change == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Agent suggestion: update ${{ steps.summary.outputs.file }}"
+          title: "🤖 Daily agent suggestion: ${{ steps.summary.outputs.file }}"
+          body: |
+            The daily site-improvement agent found one small suggestion today.
+
+            **File:** `${{ steps.summary.outputs.file }}`
+            **Why:** ${{ steps.summary.outputs.reason }}
+
+            This PR was opened automatically and changes NOTHING until you
+            review and merge it. Compliance-sensitive content (rates, offers)
+            is never touched by this agent — only reachable via `/admin`.
+          branch: "agent-suggestion/${{ github.run_number }}"
+          add-paths: |
+            index.html
+            about.html
+            contact.html
+          labels: |
+            agent-suggestion
