@@ -10,14 +10,42 @@ public_folder: "/images"
 
 collections:
   - name: "offers"
-    label: "Daily Offers"
+    label: "Loan-wise Offers (कर्ज-निहाय ऑफर्स)"
     files:
       - file: "content/offer.json"
-        label: "आजची ऑफर (Today's Offer)"
+        label: "प्रत्येक कर्ज प्रकारासाठी ऑफर संपादित करा"
         name: "offer"
         fields:
-          - {label: "ऑफरचे शीर्षक (Title)", name: "title", widget: "string"}
-          - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
+          - label: "गृहकर्ज ऑफर (Home Loan)"
+            name: "home_loan"
+            widget: "object"
+            fields:
+              - {label: "शीर्षक (Title)", name: "title", widget: "string"}
+              - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
+          - label: "वैयक्तिक कर्ज ऑफर (Personal Loan)"
+            name: "personal_loan"
+            widget: "object"
+            fields:
+              - {label: "शीर्षक (Title)", name: "title", widget: "string"}
+              - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
+          - label: "मशिनरी कर्ज ऑफर (Machinery Loan)"
+            name: "machinery_loan"
+            widget: "object"
+            fields:
+              - {label: "शीर्षक (Title)", name: "title", widget: "string"}
+              - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
+          - label: "व्यवसाय कर्ज ऑफर (Business Loan)"
+            name: "business_loan"
+            widget: "object"
+            fields:
+              - {label: "शीर्षक (Title)", name: "title", widget: "string"}
+              - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
+          - label: "मालमत्तेवर कर्ज ऑफर (Loan Against Property)"
+            name: "property_loan"
+            widget: "object"
+            fields:
+              - {label: "शीर्षक (Title)", name: "title", widget: "string"}
+              - {label: "सविस्तर माहिती (Description)", name: "description", widget: "text"}
 
   - name: "rates"
     label: "Loan Rates (कर्ज दर)"
