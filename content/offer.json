@@ -1,4 +1,22 @@
 {
-  "title": "COMMERCIAL PROPERTY LOAN",
-  "description": "Finance Your Ambition. Build Your Business.\nLooking to buy a Commercial Property for your business? HDFC Bank offers attractive financial solutions with:\n✅ ROI Starting from 8.20%*\n✅ Maximum Funding up to 80% of Property Cost*\n✅ Gross Payout up to 1.10%*\n✅ Quick Processing & Fast Approval\n✅ Flexible Repayment Options\n✅ Transparent Process\n✅ Dedicated Relationship Support\n🏬 Suitable for: • Office Spaces\n* Shops & Showrooms\n* Warehouses\n* Commercial Buildings\n* Business Expansion\n⚠️ 1% Processing Fee is Mandatory\n📞 For more details, contact:\nVinayak\n📱 +91 8329569608"
+  "home_loan": {
+    "title": "सणासुदीची विशेष गृहकर्ज ऑफर",
+    "description": "कमी प्रोसेसिंग फी आणि झटपट मंजुरी."
+  },
+  "personal_loan": {
+    "title": "तातडीच्या वैयक्तिक कर्जावर सवलत",
+    "description": "कागदपत्रे कमी, वितरण वेगाने."
+  },
+  "machinery_loan": {
+    "title": "व्यवसाय वाढवा — मशिनरी लोनवर विशेष सवलत",
+    "description": "सुलभ हप्त्यांमध्ये कर्ज उपलब्ध."
+  },
+  "business_loan": {
+    "title": "व्यावसायिक कर्ज विशेष योजना",
+    "description": "आकर्षक व्याजदरासह."
+  },
+  "property_loan": {
+    "title": "मालमत्तेवर कर्ज (Loan Against Property)",
+    "description": "मोठ्या रकमेसाठी उत्तम पर्याय."
+  }
 }
