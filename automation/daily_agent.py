@@ -50,6 +50,9 @@ Hard rules — you must never violate these:
 - If you are not confident a change is a genuine improvement, do NOT
   propose one just to have something to do. "No change today" is a valid
   and often correct answer.
+- IMPORTANT: When writing "new_file_content", output it as a valid JSON
+  string — escape every newline as \\n and every double-quote as \\".
+  Do not include literal (unescaped) line breaks inside the JSON string.
 
 Respond with STRICT JSON only, no markdown fences, no preamble:
 {
@@ -93,7 +96,7 @@ def call_gemini(context: dict) -> dict:
 
     response = model.generate_content(user_message)
     text = response.text.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-    return json.loads(text)
+    return json.loads(text, strict=False)
 
 
 def apply_suggestion(suggestion: dict) -> bool:
