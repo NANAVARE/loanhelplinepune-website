@@ -46,6 +46,8 @@ Hard rules:
 - NEVER say "guaranteed approval", "instant approval", "100% approval".
 - Always describe loanhelplinepune.in as a loan advisory/referral service, never a lender.
 - Plain, warm language a first-time borrower in Pune would understand.
+- IMPORTANT: escape every newline as \\n and every double-quote as \\" inside
+  the JSON string values. Do not include literal line breaks in the JSON.
 
 Output strict JSON only (no markdown fences, no preamble):
 {"title": "...", "meta_description": "...", "slug": "...-hyphenated...", "body_html": "...semantic HTML body, no html/head/body tags..."}
@@ -85,7 +87,7 @@ def call_gemini(topic: str) -> dict:
     )
     response = model.generate_content(f"Topic: {topic}")
     text = response.text.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-    return json.loads(text)
+    return json.loads(text, strict=False)
 
 
 POST_TEMPLATE = """<!doctype html>
