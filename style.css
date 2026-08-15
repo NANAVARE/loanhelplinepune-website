@@ -128,3 +128,31 @@ section{padding:72px 0;}
 .service-offer p{
   font-size:0.82rem; color:var(--text-muted); margin:0; line-height:1.55;
 }
+/* ---------- Trust Bar Layout Fix ---------- */
+.trust-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 20px 0;
+  margin: 20px 0;
+}
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  text-align: center;
+}
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.trust-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+}
+.trust-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
