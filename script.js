@@ -1,13 +1,8 @@
 // ============================================================
-// LoanHelpline Pune — script.js (FIXED)
-// Bug fixes vs previous version:
-//   1. Language switcher now targets [data-key] attributes (the actual
-//      markup in index.html/about.html/etc), not getElementById() with
-//      IDs that don't exist on the page.
-//   2. Loan rates now render into the REAL element (#loan-rates-content),
-//      not a non-existent #rates-container.
-//   3. Rates are shown as a clean card grid, not a raw JSON dump.
-//   4. Offer text renders into the REAL element (#offer-text).
+// LoanHelpline Pune — script.js
+// Updated: per-loan-type offers now render inside each service
+// card (id="offer-home_loan" etc.) instead of one shared
+// "Daily Offer" section, which has been removed from index.html.
 // ============================================================
 
 const langData = {
@@ -21,7 +16,6 @@ const langData = {
         "hero-subheading": "Best option for Home Loan, Personal Loan, and Machinery Loan.",
         "hero-whatsapp-button": "Chat on WhatsApp",
         "whatsapp-btn": "Contact on WhatsApp",
-        "offer-title": "🔥 Today's Special Offer",
         "loan-rates-title": "Indicative Loan Rate Ranges",
         "loan-rates-loading": "Loading loan rates...",
         "services-title": "Our Key Services",
@@ -51,7 +45,6 @@ const langData = {
         "hero-subheading": "गृहकर्ज, वैयक्तिक कर्ज आणि मशिनरी कर्जासाठी सर्वोत्तम पर्याय.",
         "hero-whatsapp-button": "WhatsApp वर चॅट करा",
         "whatsapp-btn": "WhatsApp वर संपर्क करा",
-        "offer-title": "🔥 आजची विशेष ऑफर (Daily Offer)",
         "loan-rates-title": "आजचे कर्ज दर (अंदाजे)",
         "loan-rates-loading": "कर्जाचे दर लोड होत आहेत...",
         "services-title": "आमच्या प्रमुख सेवा",
@@ -73,20 +66,24 @@ const langData = {
     }
 };
 
-// Loan-type display labels (used to render content/rates.json nicely)
 const LOAN_TYPE_LABELS = {
     en: {
-        home_loan: "Home Loan",
-        personal_loan: "Personal Loan",
-        business_loan: "Business Loan",
-        loan_against_property: "Loan Against Property",
+        home_loan: "Home Loan", personal_loan: "Personal Loan",
+        business_loan: "Business Loan", loan_against_property: "Loan Against Property",
     },
     mr: {
-        home_loan: "गृहकर्ज",
-        personal_loan: "वैयक्तिक कर्ज",
-        business_loan: "व्यवसाय कर्ज",
-        loan_against_property: "मालमत्तेवर कर्ज",
+        home_loan: "गृहकर्ज", personal_loan: "वैयक्तिक कर्ज",
+        business_loan: "व्यवसाय कर्ज", loan_against_property: "मालमत्तेवर कर्ज",
     }
+};
+
+// Maps offer.json keys -> the id of the <div class="service-offer"> in each service card
+const LOAN_OFFER_IDS = {
+    home_loan: "offer-home_loan",
+    personal_loan: "offer-personal_loan",
+    machinery_loan: "offer-machinery_loan",
+    business_loan: "offer-business_loan",
+    property_loan: "offer-property_loan",
 };
 
 function currentLang() {
@@ -100,14 +97,12 @@ function changeLanguage(lang) {
     document.querySelectorAll('[data-key]').forEach(el => {
         const key = el.getAttribute('data-key');
         if (texts[key] !== undefined) {
-            // Preserve any icon element inside buttons/links (e.g. <i class="fab fa-whatsapp">)
             const icon = el.querySelector('i');
             el.textContent = texts[key];
             if (icon) el.prepend(icon, ' ');
         }
     });
 
-    // Re-render dynamic content (rates/offer) in the new language
     renderCachedRates(lang);
 }
 
@@ -150,7 +145,6 @@ function renderCachedRates(lang) {
 
 async function loadLoanRates() {
     const lang = currentLang();
-
     try {
         const ratesResponse = await fetch('content/rates.json', { cache: 'no-store' });
         if (ratesResponse.ok) {
@@ -164,24 +158,37 @@ async function loadLoanRates() {
             container.innerHTML = `<p>${lang === 'mr' ? 'दर सध्या उपलब्ध नाहीत.' : 'Rates unavailable right now.'}</p>`;
         }
     }
+}
 
+// Renders each loan type's offer into its own service card.
+// If a loan type has no offer today, that card's offer slot is simply removed.
+async function loadOffers() {
     try {
-        const offerResponse = await fetch('content/offer.json', { cache: 'no-store' });
-        if (offerResponse.ok) {
-            const offerData = await offerResponse.json();
-            const offerTextEl = document.getElementById('offer-text');
-            if (offerTextEl) {
-                const title = offerData.title ? `<strong>${offerData.title}</strong>` : '';
-                const desc = offerData.description || '';
-                offerTextEl.innerHTML = `${title}${desc}`;
+        const res = await fetch('content/offer.json', { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = await res.json();
+
+        Object.entries(LOAN_OFFER_IDS).forEach(([key, elId]) => {
+            const el = document.getElementById(elId);
+            if (!el) return;
+
+            const offer = data[key];
+            if (offer && (offer.title || offer.description)) {
+                el.innerHTML = `
+                    <span class="service-offer-badge"><i class="fa-solid fa-fire"></i> ऑफर</span>
+                    ${offer.title ? `<strong>${offer.title}</strong>` : ''}
+                    ${offer.description ? `<p>${offer.description}</p>` : ''}
+                `;
+                el.classList.add('has-offer');
+            } else {
+                el.remove();
             }
-        }
+        });
     } catch (error) {
-        console.error("Error loading offer:", error);
+        console.error("Error loading offers:", error);
     }
 }
 
-// Wire up language buttons declared with data-lang="en" / data-lang="mr"
 function wireLanguageButtons() {
     document.querySelectorAll('.lang-button, [onclick^="changeLanguage"]').forEach(btn => {
         const lang = btn.getAttribute('data-lang');
@@ -195,4 +202,5 @@ window.addEventListener('DOMContentLoaded', () => {
     wireLanguageButtons();
     changeLanguage(currentLang());
     loadLoanRates();
+    loadOffers();
 });
