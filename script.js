@@ -103,6 +103,11 @@ function changeLanguage(lang) {
         }
     });
 
+    // Keep the language toggle buttons in sync with the active language
+    document.querySelectorAll('.lang-button').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+
     renderCachedRates(lang);
 }
 
